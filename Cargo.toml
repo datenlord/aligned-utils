@@ -1,6 +1,6 @@
 [package]
 name = "aligned-bytes"
-version = "0.1.1"
+version = "0.1.2-dev"
 authors = ["Nugine <nugine@foxmail.com>"]
 edition = "2018"
 description = "A continuous fixed-length byte array with a specified alignment."

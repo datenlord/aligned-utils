@@ -7,7 +7,7 @@
 //! # Example
 //! ```
 //! use aligned_bytes::AlignedBytes;
-//! let mut bytes = AlignedBytes::new_zeroed(1024,8);
+//! let mut bytes = AlignedBytes::new_zeroed(1024, 8);
 //! let buf: &mut [u8] = &mut *bytes;
 //! ```
 
