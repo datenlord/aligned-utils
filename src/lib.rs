@@ -1,6 +1,6 @@
-#![no_std]
 #![deny(missing_debug_implementations)]
 #![deny(missing_docs)]
+#![cfg_attr(not(feature = "std"), no_std)]
 
 //! A continuous fixed-length byte array with a specified alignment.
 //!
@@ -24,6 +24,15 @@ pub struct AlignedBytes {
     align: usize,
     bytes: NonNull<[u8]>,
 }
+
+unsafe impl Send for AlignedBytes {}
+unsafe impl Sync for AlignedBytes {}
+
+#[cfg(feature = "std")]
+impl std::panic::UnwindSafe for AlignedBytes {}
+
+#[cfg(feature = "std")]
+impl std::panic::RefUnwindSafe for AlignedBytes {}
 
 impl AlignedBytes {
     /// Allocate a zero-initialized byte array with an exact alignment.
