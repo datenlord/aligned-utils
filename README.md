@@ -11,7 +11,7 @@
 [mit-url]: LICENSE
 [docs-badge]: https://docs.rs/aligned-bytes/badge.svg
 [docs-url]: https://docs.rs/aligned-bytes/
-[ci-badge]: https://github.com/Nugine/aligned-bytes/workflows/Continuous%20integration/badge.svg
+[ci-badge]: https://github.com/Nugine/aligned-bytes/workflows/CI/badge.svg
 
 A continuous fixed-length byte array with a specified alignment.
 
