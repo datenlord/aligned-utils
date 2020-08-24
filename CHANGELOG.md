@@ -7,7 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-[Unreleased]: https://github.com/Nugine/aligned-bytes/compare/v0.1.1...HEAD
+[Unreleased]: https://github.com/Nugine/aligned-bytes/compare/v0.1.2...HEAD
+
+## [0.1.2] - 2020-08-24
+
+[0.1.2]: https://github.com/Nugine/aligned-bytes/compare/v0.1.1...v0.1.2
+
+### Added
+
++ `AlignedBox` for aligned heap allocation
 
 ## [0.1.1] - 2020-07-16
 
