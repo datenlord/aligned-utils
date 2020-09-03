@@ -15,9 +15,14 @@ impl AlignedBytes {
     /// Allocate a zero-initialized byte array with an exact alignment.
     pub fn new_zeroed(len: usize, align: usize) -> Self {
         let inner = unsafe {
-            let ptr = aligned_alloc(alloc_zeroed, len, align);
+            let ptr = if len == 0 {
+                align as *mut u8
+            } else {
+                aligned_alloc(alloc_zeroed, len, align)
+            };
             AlignedBox::from_raw(slice::from_raw_parts_mut(ptr, len), align)
         };
+        debug_assert!(inner.as_ptr() as usize % align == 0);
         Self { inner }
     }
 
@@ -105,5 +110,10 @@ mod tests {
             require_unwind_safe::<AlignedBytes>();
             require_ref_unwind_safe::<AlignedBytes>();
         }
+    }
+
+    #[test]
+    fn check_zst() {
+        AlignedBytes::new_zeroed(0, 2);
     }
 }
