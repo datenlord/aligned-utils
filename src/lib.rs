@@ -2,6 +2,7 @@
 #![deny(missing_docs)]
 #![deny(clippy::all)]
 #![cfg_attr(not(feature = "std"), no_std)]
+#![cfg_attr(feature = "unstable", feature(unsize, coerce_unsized))]
 
 //! A continuous fixed-length byte array with a specified alignment.
 //!

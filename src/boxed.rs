@@ -45,6 +45,8 @@ impl<T> AlignedBox<T> {
             }
         };
 
+        debug_assert!(inner.as_ptr() as usize % align == 0);
+
         Self {
             align,
             inner,
@@ -111,5 +113,34 @@ impl<T: ?Sized> DerefMut for AlignedBox<T> {
 impl<T: ?Sized + Debug> Debug for AlignedBox<T> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         T::fmt(self, f)
+    }
+}
+
+#[cfg(feature = "unstable")]
+mod unstable_impl {
+    use super::AlignedBox;
+
+    use core::marker::Unsize;
+    use core::ops::CoerceUnsized;
+
+    impl<T: ?Sized + Unsize<U>, U: ?Sized> CoerceUnsized<AlignedBox<U>> for AlignedBox<T> {}
+}
+
+#[cfg(test)]
+mod tests {
+    use super::AlignedBox;
+
+    #[test]
+    fn check_zst() {
+        let b = AlignedBox::new((), 1);
+        assert_eq!(&*b, &());
+        drop(b);
+    }
+
+    #[cfg(feature = "unstable")]
+    #[test]
+    fn check_coerce() {
+        let b: AlignedBox<[u8]> = AlignedBox::new([1, 2, 3, 4], 8);
+        assert_eq!(&*b, &[1, 2, 3, 4]);
     }
 }
