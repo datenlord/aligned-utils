@@ -7,7 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-[Unreleased]: https://github.com/Nugine/aligned-bytes/compare/v0.1.2...HEAD
+[Unreleased]: https://github.com/Nugine/aligned-bytes/compare/v0.1.3...HEAD
+
+## [0.1.3] - 2020-09-03
+
+[0.1.3]: https://github.com/Nugine/aligned-bytes/compare/v0.1.2...v0.1.3
+
+### Added
+
++ We can perform coercions on `AlignedBox<T>` like `Box<T>` (requires the feature `unstable`)
+
+### Fixed
+
++ Fix UB which happens when creating an `AlignedBytes` with zero length
++ Yank `v0.1.0`...`v0.1.2`
 
 ## [0.1.2] - 2020-08-24
 
