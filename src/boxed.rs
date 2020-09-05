@@ -36,6 +36,7 @@ impl<T> AlignedBox<T> {
         let align = mem::align_of::<T>().max(align);
 
         let inner = if size == 0 {
+            mem::forget(x);
             NonNull::dangling()
         } else {
             unsafe {
@@ -85,14 +86,14 @@ impl<T: ?Sized> Drop for AlignedBox<T> {
     fn drop(&mut self) {
         unsafe {
             let size = mem::size_of_val(self.inner.as_ref());
-            if size == 0 {
-                return;
-            }
+
             let ptr = self.inner.as_ptr();
             drop_in_place(ptr);
 
-            let layout = Layout::from_size_align_unchecked(size, self.align);
-            dealloc(ptr.cast(), layout)
+            if size != 0 {
+                let layout = Layout::from_size_align_unchecked(size, self.align);
+                dealloc(ptr.cast(), layout)
+            }
         }
     }
 }
@@ -142,5 +143,27 @@ mod tests {
     fn check_coerce() {
         let b: AlignedBox<[u8]> = AlignedBox::new([1, 2, 3, 4], 8);
         assert_eq!(&*b, &[1, 2, 3, 4]);
+    }
+
+    #[test]
+    fn check_zst_drop() {
+        use std::sync::atomic::{AtomicUsize, Ordering};
+
+        static DROP_COUNT: AtomicUsize = AtomicUsize::new(0);
+
+        #[derive(Debug)]
+        struct Token;
+
+        impl Drop for Token {
+            fn drop(&mut self) {
+                DROP_COUNT.fetch_add(1, Ordering::SeqCst);
+            }
+        }
+
+        let b: AlignedBox<Token> = AlignedBox::new(Token, 1);
+        assert_eq!(DROP_COUNT.load(Ordering::SeqCst), 0);
+
+        drop(b);
+        assert_eq!(DROP_COUNT.load(Ordering::SeqCst), 1);
     }
 }
