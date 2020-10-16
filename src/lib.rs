@@ -17,9 +17,10 @@ extern crate alloc;
 
 mod boxed;
 mod bytes;
+pub mod stack;
 
-pub use boxed::AlignedBox;
-pub use bytes::AlignedBytes;
+pub use self::boxed::AlignedBox;
+pub use self::bytes::AlignedBytes;
 
 use alloc::alloc::{handle_alloc_error, Layout};
 
