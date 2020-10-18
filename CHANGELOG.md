@@ -7,9 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-[Unreleased]: https://github.com/datenlord/aligned-bytes/compare/v0.1.4...HEAD
+[Unreleased]: https://github.com/datenlord/aligned-bytes/compare/v0.1.5...HEAD
+
+## [0.1.5] - 2020-10-18
+
+[0.1.5]: https://github.com/datenlord/aligned-bytes/compare/v0.1.4...v0.1.5
 
 The project has been moved from `Nugine/aligned-bytes` to `datenlord/aligned-bytes`.
+
+### Added
+
++ Add aligned wrappers which allow const values and stack values to be aligned.
 
 ## [0.1.4] - 2020-09-05
 
