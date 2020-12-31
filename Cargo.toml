@@ -11,6 +11,6 @@ categories = ["data-structures", "embedded", "no-std"]
 readme = "README.md"
 
 [features]
-std = []
+alloc = []
+std = ["alloc"]
 default = ["std"]
-unstable = []

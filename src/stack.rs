@@ -1,4 +1,11 @@
-//! Aligned wrappers
+//! Aligned newtypes
+//!
+//! ```
+//! use aligned_utils::stack::Align8;
+//! let mut arr = Align8([1, 2, 3]);
+//! let bytes: &[u8] = &*arr;
+//! ```
+//!
 
 use core::ops::{Deref, DerefMut};
 
@@ -9,7 +16,6 @@ macro_rules! define_align_newtype {
             #[repr(align($align))]
             #[derive(Debug, Clone, Copy)]
             pub struct $id<T: ?Sized>(pub T);
-
 
             impl<T: ?Sized> Deref for $id<T> {
                 type Target = T;
@@ -23,13 +29,6 @@ macro_rules! define_align_newtype {
                     &mut self.0
                 }
             }
-
-            impl<T> $id<T> {
-                /// Consumes the aligned wrapper, returning the wrapped value.
-                pub fn into_inner(this: Self) -> T {
-                    this.0
-                }
-            }
         )+
 
         #[cfg(test)]
@@ -40,16 +39,20 @@ macro_rules! define_align_newtype {
             fn check_aligned_wrappers(){
                 $(
                     {
-                        let a = $id([0u8;1]);
+                        let a = $id([0_u8;1]);
                         assert_eq!(core::mem::align_of_val(&a), $align);
                         assert_eq!(a.as_ptr() as usize % $align, 0);
-                        assert_eq!(a.as_ref(), &[0u8]);
+                        assert_eq!(a.as_ref(), &[0_u8]);
 
-                        let b = Box::new(a);
-                        assert_eq!(&*b as *const $id<[u8;1]> as usize % $align, 0);
+                        #[cfg(feature="alloc")]
+                        {
+                            let b = alloc::boxed::Box::new(a);
+                            let p: *const $id<[u8;1]> = &*b;
+                            assert_eq!(p as usize % $align, 0);
+                        }
 
                         let c: &$id<[u8]> = &a;
-                        assert_eq!(c.as_ref(), &[0u8]);
+                        assert_eq!(c.as_ref(), &[0_u8]);
                     }
                 )+
             }
