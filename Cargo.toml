@@ -1,11 +1,11 @@
 [package]
-name = "aligned-bytes"
-version = "0.1.5"
+name = "aligned-utils"
+version = "0.2.0-dev"
 authors = ["Nugine <nugine@foxmail.com>"]
 edition = "2018"
-description = "A continuous fixed-length byte array with a specified alignment."
+description = "Common utilities to work with aligned values and allocation"
 license = "MIT"
-repository = "https://github.com/datenlord/aligned-bytes"
+repository = "https://github.com/datenlord/aligned-utils"
 keywords = ["no-std", "alloc", "align"]
 categories = ["data-structures", "embedded", "no-std"]
 readme = "README.md"
