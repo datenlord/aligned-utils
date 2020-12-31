@@ -7,7 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-[Unreleased]: https://github.com/datenlord/aligned-utils/compare/v0.1.5...HEAD
+[Unreleased]: https://github.com/datenlord/aligned-utils/compare/v0.2.0...HEAD
+
+## [0.2.0] - 2020-12-31
+
+[0.2.0]: https://github.com/datenlord/aligned-utils/compare/v0.1.5...v0.2.0
 
 The project has been renamed to `aligned-utils`.
 
