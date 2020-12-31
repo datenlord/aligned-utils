@@ -26,27 +26,29 @@ jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        rust:
+          - stable
+          - 1.43.0 # MSRV
     steps:
       - uses: actions/checkout@v2
-      # stable test
       - uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchain: stable
+          toolchain: ${{ matrix.rust }}
           override: true
       - uses: actions-rs/cargo@v1
         with:
           command: test
-      # nightly test
-      - uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: nightly
-          override: true
       - uses: actions-rs/cargo@v1
         with:
           command: test
-          args: --all-features
+          args: --no-default-features
+      - uses: actions-rs/cargo@v1
+        with:
+          command: test
+          args: --no-default-features --features alloc
 
   fmt:
     name: Fmt
