@@ -115,9 +115,9 @@ impl AlignedBytes {
     /// To release the memory, call [`AlignedBytes::from_raw`].
     ///
     #[must_use]
-    pub fn into_raw(self) -> (NonNull<[u8]>, usize) {
-        let ret = (self.buf, self.align);
-        mem::forget(self);
+    pub fn into_raw(this: Self) -> (NonNull<[u8]>, usize) {
+        let ret = (this.buf, this.align);
+        mem::forget(this);
         ret
     }
 
@@ -240,5 +240,12 @@ mod tests {
     fn check_zst() {
         let bytes = AlignedBytes::new_zeroed(0, 2);
         drop(bytes);
+    }
+
+    #[test]
+    fn check_into_raw() {
+        let bytes = AlignedBytes::new_zeroed(0, 2);
+        let (buf, align) = AlignedBytes::into_raw(bytes);
+        drop(unsafe { AlignedBytes::from_raw(buf, align) });
     }
 }
