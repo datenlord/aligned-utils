@@ -73,4 +73,16 @@ define_align_newtype! (
     Align32: 32,
     /// A newtype with alignment of at least 64 bytes
     Align64: 64,
+    /// A newtype with alignment of at least 128 bytes
+    Align128: 128,
+    /// A newtype with alignment of at least 256 bytes
+    Align256: 256,
+    /// A newtype with alignment of at least 512 bytes
+    Align512: 512,
+    /// A newtype with alignment of at least 1024 bytes
+    Align1024: 1024,
+    /// A newtype with alignment of at least 2048 bytes
+    Align2048: 2048,
+    /// A newtype with alignment of at least 4096 bytes
+    Align4096: 4096,
 );

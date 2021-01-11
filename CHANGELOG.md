@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [Unreleased]: https://github.com/datenlord/aligned-utils/compare/v0.2.0...HEAD
 
+## Added
+
++ Add `Align128` ~ `Align4096`.
+
 ## Changed
 
 + `AlignedBytes::into_raw` takes `this: Self`
