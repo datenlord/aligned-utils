@@ -7,7 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-[Unreleased]: https://github.com/datenlord/aligned-utils/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/datenlord/aligned-utils/compare/v1.0.1...HEAD
+
+## [1.0.1] - 2021-01-28
+
+[1.0.1]: https://github.com/datenlord/aligned-utils/compare/v1.0.0...v1.0.1
 
 ### Added
 
@@ -17,11 +21,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [1.0.0]: https://github.com/datenlord/aligned-utils/compare/v0.2.0...v1.0.0
 
-## Added
+### Added
 
 + Add `Align128` ~ `Align4096`.
 
-## Changed
+### Changed
 
 + `AlignedBytes::into_raw` takes `this: Self`
 
@@ -31,19 +35,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 The project has been renamed to `aligned-utils`.
 
-## Added
+### Added
 
 + Add `AlignedBytes::new_from_slice`
 
-## Changed
+### Changed
 
 * Move `AlignedBytes` to `crate::bytes::AlignedBytes`.
 
-## Removed
+### Removed
 
 - Remove `AlignedBox`
 
-## Fixed
+### Fixed
 
 + Yank `v0.1.4`...`v0.1.5` due to a null pointer UB.
 
