@@ -9,7 +9,7 @@
 //! ```
 //!
 
-use alloc::alloc::{alloc_zeroed, dealloc, handle_alloc_error, Layout};
+use alloc::alloc::{alloc, alloc_zeroed, dealloc, handle_alloc_error, Layout};
 use core::fmt;
 use core::mem;
 use core::ops::{Deref, DerefMut};
@@ -95,7 +95,7 @@ impl AlignedBytes {
             let ptr = if len == 0 {
                 align as *mut u8
             } else {
-                let dst = aligned_alloc(alloc_zeroed, layout);
+                let dst = aligned_alloc(alloc, layout);
                 ptr::copy_nonoverlapping(bytes.as_ptr(), dst, len);
                 dst
             };
@@ -130,6 +130,12 @@ impl AlignedBytes {
     #[must_use]
     pub const unsafe fn from_raw(buf: NonNull<[u8]>, align: usize) -> Self {
         Self { buf, align }
+    }
+}
+
+impl Clone for AlignedBytes {
+    fn clone(&self) -> Self {
+        Self::new_from_slice(self, self.align)
     }
 }
 
@@ -178,6 +184,10 @@ mod tests {
             let bytes = &[1, 2, 3, 4, 5, 6, 7, 8];
             let aligned_bytes = AlignedBytes::new_from_slice(bytes, 8);
             assert_eq!(&*aligned_bytes, bytes);
+
+            let aligned_bytes_cloned = aligned_bytes.clone();
+            drop(aligned_bytes);
+            assert_eq!(&*aligned_bytes_cloned, bytes);
         }
     }
 
