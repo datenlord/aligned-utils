@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [Unreleased]: https://github.com/datenlord/aligned-utils/compare/v1.0.1...HEAD
 
+### Added
+
++ impl `From<Box<[u8]>>` for `AlignedBytes`
+
 ## [1.0.1] - 2021-01-28
 
 [1.0.1]: https://github.com/datenlord/aligned-utils/compare/v1.0.0...v1.0.1

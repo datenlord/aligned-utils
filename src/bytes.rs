@@ -10,6 +10,7 @@
 //!
 
 use alloc::alloc::{alloc, alloc_zeroed, dealloc, handle_alloc_error, Layout};
+use alloc::boxed::Box;
 use core::fmt;
 use core::mem;
 use core::ops::{Deref, DerefMut};
@@ -170,9 +171,19 @@ impl fmt::Debug for AlignedBytes {
     }
 }
 
+impl From<Box<[u8]>> for AlignedBytes {
+    fn from(b: Box<[u8]>) -> Self {
+        unsafe {
+            let buf = NonNull::new_unchecked(Box::into_raw(b));
+            Self { buf, align: 1 }
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::AlignedBytes;
+    use alloc::boxed::Box;
 
     #[test]
     fn check_content() {
@@ -188,6 +199,12 @@ mod tests {
             let aligned_bytes_cloned = aligned_bytes.clone();
             drop(aligned_bytes);
             assert_eq!(&*aligned_bytes_cloned, bytes);
+        }
+        {
+            let bytes: &[u8] = &[1, 2, 3, 4, 5, 6, 7, 8];
+            let boxed_bytes: Box<[u8]> = bytes.into();
+            let aligned_bytes: AlignedBytes = boxed_bytes.into();
+            assert_eq!(&*aligned_bytes, bytes);
         }
     }
 
