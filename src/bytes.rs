@@ -62,7 +62,7 @@ impl Drop for AlignedBytes {
         unsafe {
             let size = self.buf.as_mut().len();
             if size != 0 {
-                let ptr = self.buf.as_ptr() as *mut u8;
+                let ptr = self.buf.cast().as_ptr();
                 let layout = Layout::from_size_align_unchecked(size, self.align);
                 dealloc(ptr, layout);
             }
